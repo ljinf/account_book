@@ -1,4 +1,6 @@
 import 'package:account_book/pages/Index/Index_view.dart';
+import 'package:account_book/pages/bill/add/add_bill_binding.dart';
+import 'package:account_book/pages/bill/add/add_bill_view.dart';
 import 'package:account_book/pages/home/home.binding.dart';
 import 'package:account_book/pages/home/home_view.dart';
 import 'package:account_book/pages/login/login_binding.dart';
@@ -25,6 +27,11 @@ class AppPages {
       name: AppRoutes.Home,
       page: () => HomePage(),
       binding: HomeBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.AddBill,
+      page: () => AddBillPage(),
+      binding: AddBillBinding(),
     ),
   ];
 

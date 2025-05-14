@@ -3,7 +3,8 @@ import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:account_book/utils/utils.dart';
+import '../../utils/request.dart';
+import '../../utils/screen_device.dart';
 
 class ProxyPage extends StatelessWidget {
   ProxyPage({Key? key}) : super(key: key);

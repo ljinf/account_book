@@ -1,10 +1,10 @@
 import 'dart:io';
+import 'package:account_book/utils/request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:account_book/common/values/values.dart';
 import 'package:account_book/model/login_model.dart';
 import 'package:account_book/utils/local_storage.dart';
-import 'package:account_book/utils/utils.dart';
 
 /// 全局配置
 class Global {

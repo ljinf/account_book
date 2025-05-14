@@ -11,12 +11,14 @@ class IndexPage extends GetView<IndexController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Scaffold(
+    return HomePage();
+
+    /* return Obx(() => Scaffold(
           body: controller.isloadWelcomePage.isTrue
               ? SplashPage()
               : Global.isOfflineLogin
                   ? HomePage()
                   : LoginPage(),
-        ));
+        ));*/
   }
 }

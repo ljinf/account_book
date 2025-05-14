@@ -1,9 +1,11 @@
 import 'package:account_book/pages/bill/account/account_book.dart';
+import 'package:account_book/router/app_pages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import '../../common/colors/colors.dart';
 import '../../components/highlight_well.dart';
@@ -67,8 +69,6 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          // 使用PageView的原因参看 https://zhuanlan.zhihu.com/p/58582876
-          //在子页State中继承AutomaticKeepAliveClientMixin并重写wantKeepAlive 返回true
           body: PageView(
             controller: _pageController,
             onPageChanged: _onPageChanged,
@@ -166,10 +166,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           child: HighLightWell(
                             onTap: () {
-                              // NavigatorUtils.push(
-                              //     context, BillRouter.bookkeepPage,
-                              //     transition:
-                              //         TransitionType.cupertinoFullScreenDialog);
+                              Get.toNamed(AppRoutes.AddBill, arguments: {});
                             },
                             isForeground: true,
                             borderRadius: BorderRadius.circular(48 / 2),

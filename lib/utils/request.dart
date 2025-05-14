@@ -5,7 +5,7 @@ import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:account_book/config.dart';
 import 'package:account_book/global.dart';
-import 'package:account_book/utils/utils.dart';
+import 'authentication.dart';
 
 /*
   * http 操作类

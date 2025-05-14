@@ -21,16 +21,16 @@ class Dbhelper {
   Database? _db;
 
   /// 账单表
-  final _billTableName = 'BillRecord';
+  final _billTableName = 'bill_record';
 
   /// 支出类别表
-  final _initialExpenCategory = 'initialExpenCategory';
+  final _expendCategoryTableName = 'expend_category_tablename';
 
   /// 收入类别表
-  final _initialIncomeCategory = 'initialIncomeCategory';
+  final _incomeCategoryTableName = 'income_category_tablename';
 
   /// 每月预算表
-  final _budgetTableName = 'Budget';
+  final _budgetTableName = 'budget';
 
   /// 获取数据库
   Future<Database?> get db async {
@@ -75,7 +75,7 @@ class Dbhelper {
 
     // 支出类别表
     String queryStringExpen = """
-    CREATE TABLE $_initialExpenCategory(
+    CREATE TABLE $_expendCategoryTableName(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT,
       image TEXT,
@@ -86,7 +86,7 @@ class Dbhelper {
 
     // 收入类别表
     String queryStringIncome = """
-    CREATE TABLE $_initialIncomeCategory(
+    CREATE TABLE $_incomeCategoryTableName(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT,
       image TEXT,
@@ -103,7 +103,7 @@ class Dbhelper {
       List<CategoryItem> models =
           list.map((i) => CategoryItem.fromJson(i)).toList();
       models.forEach((item) async {
-        await db.insert(_initialExpenCategory, item.toJson());
+        await db.insert(_expendCategoryTableName, item.toJson());
       });
     });
 
@@ -115,7 +115,7 @@ class Dbhelper {
       List<CategoryItem> models =
           list.map((i) => CategoryItem.fromJson(i)).toList();
       models.forEach((item) async {
-        await db.insert(_initialIncomeCategory, item.toJson());
+        await db.insert(_incomeCategoryTableName, item.toJson());
       });
     });
 
@@ -135,7 +135,7 @@ class Dbhelper {
   Future<List> getInitialExpenCategory() async {
     var dbClient = await db;
     var result = await dbClient!
-        .rawQuery('SELECT * FROM $_initialExpenCategory ORDER BY sort ASC');
+        .rawQuery('SELECT * FROM $_expendCategoryTableName ORDER BY sort ASC');
     return result.toList();
   }
 
@@ -143,7 +143,7 @@ class Dbhelper {
   Future<List> getInitialIncomeCategory() async {
     var dbClient = await db;
     var result = await dbClient!
-        .rawQuery('SELECT * FROM $_initialIncomeCategory ORDER BY sort ASC');
+        .rawQuery('SELECT * FROM $_incomeCategoryTableName ORDER BY sort ASC');
     return result.toList();
   }
 
@@ -161,18 +161,14 @@ class Dbhelper {
       'type': model.type,
       'categoryName': model.categoryName,
       'image': model.image,
-      'createTime': model.createTime != null ? model.createTime : nowTime,
-      'createTimestamp': model.createTimestamp != null
-          ? model.createTimestamp
-          : now.millisecondsSinceEpoch,
-      'updateTime': model.updateTime != null ? model.updateTime : nowTime,
-      'updateTimestamp': model.updateTimestamp != null
-          ? model.updateTimestamp
-          : now.millisecondsSinceEpoch,
+      'createTime': model.createTime ?? nowTime,
+      'createTimestamp': model.createTimestamp ?? now.millisecondsSinceEpoch,
+      'updateTime': model.updateTime ?? nowTime,
+      'updateTimestamp': model.updateTimestamp ?? now.millisecondsSinceEpoch,
     };
     var result;
     try {
-      if (model.id == null) {
+      if (model.id == 0) {
         result = await dbClient!.insert(_billTableName, map);
       } else {
         result = await dbClient!
@@ -199,8 +195,6 @@ class Dbhelper {
     DateTime bugdgetTime = DateTime.fromMillisecondsSinceEpoch(startTime);
     var budgetModel = await querybudget(
         '${bugdgetTime.year}-${bugdgetTime.month.toString().padLeft(2, '0')}');
-
-    late DateTime _preTime;
 
     /// 当天总支出金额
     double expenMoney = 0;
@@ -251,6 +245,7 @@ class Dbhelper {
     }
 
     int length = models.length;
+    DateTime? _preTime;
 
     List.generate(length, (index) {
       BillRecordModel item = models[index];
@@ -266,9 +261,9 @@ class Dbhelper {
         DateTime time =
             DateTime.fromMillisecondsSinceEpoch(item.updateTimestamp!);
         //判断账单是不是在同一天
-        if (time.year == _preTime.year &&
-            time.month == _preTime.month &&
-            time.day == _preTime.day) {
+        if (time.year == _preTime?.year &&
+            time.month == _preTime?.month &&
+            time.day == _preTime?.day) {
           //如果是同一天
           addAction(item);
           if (index == length - 1) {
@@ -290,7 +285,7 @@ class Dbhelper {
 
     if (budgetModel != null) {
       return BillRecordMonth(monthExpenMoney, monthIncomeMoney, recordLsit,
-          isBudget: budgetModel.isOpen, budget: budgetModel.budget);
+          isBudget: budgetModel.isOpen ?? 0, budget: budgetModel.budget ?? 0);
     }
 
     return BillRecordMonth(monthExpenMoney, monthIncomeMoney, recordLsit);

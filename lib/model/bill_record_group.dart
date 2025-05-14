@@ -8,30 +8,30 @@ class BillRecordGroup {
   String? date;
 
   /// 当天总支出金额
-  double? expenMoney;
+  double expenMoney = 0;
 
   /// 当日总收入
-  double? incomeMoney;
+  double incomeMoney = 0;
 }
 
 /// 月份记录
 class BillRecordMonth {
-  BillRecordMonth(this.expenMoney, this.incomeMoney, this.recordLsit,
+  BillRecordMonth(this.expenMoney, this.incomeMoney, this.recordList,
       {this.isBudget = 0, this.budget = 0.0})
       : super();
 
   /// 当月总支出金额
-  double? expenMoney;
+  double expenMoney = 0;
 
   /// 当月总收入
-  double? incomeMoney;
+  double incomeMoney = 0;
 
   /// 是否有预算
-  int? isBudget;
+  int isBudget = 0;
 
   /// 预算金额
-  double? budget;
+  double budget = 0;
 
   /// 账单记录
-  List? recordLsit;
+  List recordList=[];
 }

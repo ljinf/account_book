@@ -1,5 +1,5 @@
 import 'package:account_book/model/login_model.dart';
-import 'package:account_book/utils/utils.dart';
+import '../utils/request.dart';
 
 /// 用户
 class UserAPI {

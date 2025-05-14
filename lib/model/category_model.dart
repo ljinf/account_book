@@ -49,7 +49,7 @@ class CategoryItem extends Object {
 
   Map<String, dynamic> toJson() => {
         "name": name,
-        "iamge": image,
+        "image": image,
         "sort": sort,
       };
 }

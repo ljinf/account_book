@@ -9,4 +9,6 @@ abstract class AppRoutes {
 
   // setproxy
   static const Proxy = '/proxy';
+
+  static const AddBill = '/addBill';
 }
